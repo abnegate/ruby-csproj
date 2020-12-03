@@ -10,9 +10,8 @@ Gem::Specification.new do |spec|
   spec.description = "Load and manipulate C# solutions and projects"
   spec.homepage = "https://github.com/abnegate/ruby-csproj"
   spec.license = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+  spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/abnegate/ruby-csproj"
