@@ -95,14 +95,18 @@ module CsProj
     def self.detect_info_plist
       return if CsProj.config[:plist_path] || (CsProj.config[:platform] != Platform::IOS)
 
-      plist_path = find_file("*/Info.plist", 1)
+      plist_path = abs_project_path find_file("Info.plist", 1)
 
       unless plist_path
-        puts "Not able to find Info.plist automatically, try to specify it via `plist_path` parameter."
-        exit
+        plist_path = abs_project_path "Info.plist"
+
+        unless File.exist? plist_path
+          puts "Not able to find Info.plist automatically, try to specify it via `plist_path` parameter."
+          exit
+        end
       end
 
-      CsProj.config[:plist_path] = abs_project_path plist_path
+      CsProj.config[:plist_path] = plist_path
     end
 
     def self.detect_assembly_name(doc_csproj)
@@ -147,16 +151,18 @@ module CsProj
     end
 
     def self.abs_project_path(path)
+      return nil if path.nil?
+
       path = path.tr('\\', "/")
       platform_path = CsProj.config[:project_path]
-      path = "#{File.dirname platform_path}/#{path}"
-      path
+      "#{File.dirname(platform_path)}/#{path}"
     end
 
     def self.abs_path(path)
+      return nil if path.nil?
+
       path = path.tr('\\', "/")
-      path = File.expand_path(path)
-      path
+      File.expand_path(path)
     end
   end
 end
